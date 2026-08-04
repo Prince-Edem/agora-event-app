@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "../auth/server";
 import { prisma} from "../prisma";
+import type { RsvpStatus } from "@/app/generated/prisma/enums";
 
 function parseCreateEvent(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
@@ -50,7 +51,13 @@ function parseRsvp(formData: FormData) {
 export async function createEventAction(formData: FormData) {
   const session = await getSession();
   const userId = session?.data?.user.id;
+  if (!userId) {
+    throw new Error("Not authenticated.");
+  }
   const input = parseCreateEvent(formData);
+  if (!input.eventDate) {
+    throw new Error("Event date is required.");
+  }
 
   try {
   const created = await prisma.event.create({
@@ -59,7 +66,7 @@ export async function createEventAction(formData: FormData) {
       title: input.title,
       description: input.description,
       location: input.location,
-      eventDate: input.eventDate ? new Date(input.eventDate) : null,
+      eventDate: new Date(input.eventDate),
     },
   });
     redirect(`/events/${created.id}`);
@@ -72,6 +79,9 @@ export async function createEventAction(formData: FormData) {
 export async function createInviteLinkAction(eventId: string) {
   const session = await getSession();
   const userId = session?.data?.user.id;
+  if (!userId) {
+    throw new Error("Not authenticated.");
+  }
   const owns = await prisma.event.findFirst({
     where: { id: eventId, ownerUserId: userId },
     select: { id: true },
@@ -127,12 +137,12 @@ export async function submitOrUpdateRsvpAction(token: string, formData: FormData
       name: input.name,
       email: input.email,
       emailNormalized,
-      status: input.status as RsvpStatus,
+      status: input.status,
     },
 
     update: {
       name: input.name,
-      status: input.status as RsvpStatus,
+      status: input.status,
       respondedAt: new Date(),
     },
   })

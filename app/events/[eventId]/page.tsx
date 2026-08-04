@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { EventDetailContent } from "@/components/event-detail-content";
 import { getSession } from "@/lib/auth/server";
 
@@ -7,6 +8,9 @@ export default async function EventDetailsPage({ params }: {params: Promise<{eve
   const { eventId } = await params;
 
   const session = await getSession();
+  if (!session.data?.user?.id) {
+    redirect('/auth/sign-in')
+  }
 
-  return <EventDetailContent userId={session?.data?.user.id} eventId={eventId} />;
+  return <EventDetailContent userId={session.data.user.id} eventId={eventId} />;
 }
