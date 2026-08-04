@@ -66,7 +66,7 @@ export async function DashboardContent({userId}: {userId: string}) {
         </p>
       </CardContent>
     </Card>) : (
-    <div className="grid md:grid-cols-2 gap-4">
+    <div className="grid md:grid-cols-2 gap-4 max-w-5xl w-full mx-auto">
       {events.map((event, key) => (
         <Link key={key} href={`/events/${event.id}`}>
           <Card key={event.id} className="space-y-3">

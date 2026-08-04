@@ -13,7 +13,7 @@ import { createEventAction } from "@/lib/actions/events"
 
 export default async function NewEventPage() {
   return (
-    <div className="mx-auto w-full max-w-2xl">
+    <div className="mx-auto w-full max-w-2xl py-16 md:py-18">
       <Card>
         <CardHeader>
           <CardTitle>Create Event</CardTitle>

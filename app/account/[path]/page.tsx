@@ -14,7 +14,7 @@ export default async function AccountPage({
 
   const {path} = await params;
   return (
-    <main className="container p-4 md:p-6">
+    <main className="container px-4 md:px-6  py-16 md:py-16">
       <AccountView path={path}/>
     </main>
   )

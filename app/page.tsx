@@ -30,32 +30,32 @@ export default function Home() {
             Create an event. Share it. Watch the yeses come in.
           </h1>
           <p className="text-muted-foreground">
-            Palava makes it simple to set up an event, send it to your guests, and see who's coming — no spreadsheets required.
+            Gathr makes it simple to set up an event, send it to your guests, and see who's coming - no spreadsheets required.
           </p>
         </div>
         {/* Buttons */}
         <div className="flex items-center justify-center gap-4">
-          <Button className="px-6 py-5 cursor-pointer">
+          <Button className="px-6 py-6 cursor-pointer">
             Create and event
             <span>
               <ArrowRight />
             </span>
           </Button>
-          <Button className="px-6 py-5 cursor-pointer border" variant="ghost">
+            <Button className="px-6 py-6 cursor-pointer border-1 border-[var(--brand)] bg-white" variant="ghost">
             Open dashboard
           </Button>
         </div>
       </div>
       {/* Cards */}
-      <div className="flex flex-col sm:flex-row max-w-4xl mx-auto justify-center items-center gap-5 font-semibold">
+      <div className="flex flex-col sm:flex-row mx-auto justify-center items-center gap-5">
         { cards.map((card, key) => (
-          <Card key={key} className="px-3 pb-7">
+            <Card key={key} className="flex-1 px-3 pb-14 shadow-md">
             <CardHeader>
               <span className="py-3">
                 {card.icon}
               </span>
               <CardTitle>
-                <h2>{card.title}</h2>
+                <h2 className="font-semibold">{card.title}</h2>
               </CardTitle>
             </CardHeader>
             <CardContent>

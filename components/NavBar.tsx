@@ -12,12 +12,12 @@ export default function NavBar() {
   if (pathname === "/") {
     return (
     <nav className="fixed top-0 w-full z-50">
-      <header className="border-b border-[var(--border)] bg-[var(--surface)]/90 backdrop-blur">
+      <header className="border-b border-gray-500 bg-brand/90 backdrop-blur">
         <div className="mx-auto flex items-center justify-between h-16 w-full max-w-6xl px-4">
-          <Link href={"/"} className="text-3xl font-bold tracking-tighter">
-            GATHR.
+          <Link href={"/"} className="text-3xl font-bold tracking-tighter text-white">
+            GATHR<span className="text-gold">.</span>
           </Link>
-          <Button className="px-5 py-4">
+          <Button className="text-md px-6 py-5 border-0 bg-white text-black hover:bg-white/95">
             <Link href={"/auth/sign-in"}>Sign in</Link>
           </Button>
         </div>
@@ -30,7 +30,7 @@ export default function NavBar() {
     <nav className="fixed top-0 w-full z-50">
       <header className="border-b border-[var(--border)] bg-[var(--surface)]/90 backdrop-blur">
         <div className="mx-auto flex items-center justify-between h-16 w-full max-w-6xl px-4">
-          <Link href={"/"} className="text-3xl font-bold tracking-tighter">
+          <Link href={"/"} className="text-3xl font-bold tracking-tighter text-white">
             GATHR.
           </Link>
           <div></div>
@@ -43,7 +43,7 @@ export default function NavBar() {
     <nav className="fixed top-0 w-full z-50">
       <header className="border-b border-[var(--border)] bg-[var(--surface)]/90 backdrop-blur">
         <div className="mx-auto flex items-center justify-between h-16 w-full max-w-6xl px-4">
-          <Link href={"/"} className="text-3xl font-bold tracking-tighter">
+          <Link href={"/"} className="text-3xl font-bold tracking-tighter text-white">
             GATHR.
           </Link>
           <nav className="text-md text-[var(--muted-foreground)]">
