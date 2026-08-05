@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gathr",
-  description: "Event planner",
+  title: "Agora",
+  description: "Event management",
 };
 
 export default function RootLayout({

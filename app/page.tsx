@@ -37,7 +37,7 @@ export default function Home() {
             Create an event. Share it. Watch the yeses come in.
           </h1>
           <p className="text-muted-foreground">
-            Gathr makes it simple to set up an event, send it to your guests, and see who's coming - no spreadsheets required.
+            AGORA makes it simple to set up an event, send it to your guests, and see who's coming - no spreadsheets required.
           </p>
         </div>
         {/* Buttons */}
