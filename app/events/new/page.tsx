@@ -75,7 +75,7 @@ export default function NewEventPage() {
                 <Input id="title" name="title" placeholder="Adjei-Mensah wedding" required />
               </Field>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4 grid-cols-2">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
                   <Input
