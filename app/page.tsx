@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ArrowRight, CalendarPlus, Share2, UserStar } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 const cards = [
   {
@@ -35,15 +36,19 @@ export default function Home() {
         </div>
         {/* Buttons */}
         <div className="flex items-center justify-center gap-4">
-          <Button className="px-6 py-6 cursor-pointer">
-            Create and event
-            <span>
-              <ArrowRight />
-            </span>
-          </Button>
+          <Link href={"/auth/sign-in"}>
+            <Button className="px-6 py-6 cursor-pointer">
+              Create and event
+              <span>
+                <ArrowRight />
+              </span>
+            </Button>
+          </Link>
+          <Link href={"/auth/sign-in"}>
             <Button className="px-6 py-6 cursor-pointer border-1 border-[var(--brand)] bg-white" variant="ghost">
-            Open dashboard
-          </Button>
+              Open dashboard
+            </Button>
+          </Link>
         </div>
       </div>
       {/* Cards */}
