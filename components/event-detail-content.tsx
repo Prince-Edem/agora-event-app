@@ -7,6 +7,7 @@ import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { createInviteLinkAction } from "@/lib/actions/events";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { ArrowLeft, CalendarDays, MapPin, Share2, SquarePen } from 'lucide-react';
 
 
 export async function EventDetailContent({userId, eventId}: {userId: string, eventId: string}) {
@@ -30,12 +31,14 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
 
   const counts = countByStatus(row.rsvps);
 
+  const eventDate = row.eventDate ? new Date(row.eventDate) : null;
+
   const event = {
     id: row.id,
     title: row.title,
     description: row.description,
     location: row.location,
-    eventDate: row.eventDate ? row.eventDate.toISOString() : null,
+    eventDate,
     inviteToken: row.invite?.token ?? null,
     goingCount: counts.goingCount,
     maybeCount: counts.maybeCount,
@@ -63,36 +66,81 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
   }))
 
   const createInviteActionForEvent = createInviteLinkAction.bind(null, event.id);
+
+  function labelStatus(status: string) {
+    if (status === "not_going") return "Not going";
+    return "Going";
+  }
+
+  const eventDateLabel = event.eventDate
+    ? `${event.eventDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })} · ${event.eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
+    : null;
   const inviteUrl = event.inviteToken ? `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/invite/${event.inviteToken}` : null
 
   return (
-    <div className="flex flex-col gap-6 py-16 md:py-18">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight">{event.title}</h1>
-          <p>
-            {event.eventDate 
-              ? new Date(event.eventDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
-              : "No date selected"}
-
-              {event.location ? ` - ${event.location}` : "" }
-          </p>
-          {event.description && 
-            (<p className="max-w-2xl text-sm text-muted-foreground">
+    <div className="flex flex-col gap-6 py-16 md:py-16">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="space-y-3">
+          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+            <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-border bg-surface"><ArrowLeft className="h-4 w-4" /></span>
+              Back to events
+            </Link>
+          </div>
+          <h1 className="text-3xl font-semibold tracking-tight mt-8">{event.title}</h1>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            {eventDateLabel ? (
+              <div className="inline-flex items-center gap-1">
+                <CalendarDays className="h-4 w-4" />
+                {eventDateLabel}
+              </div>
+            ) : (
+              <div className="inline-flex items-center gap-1">
+                <CalendarDays className="h-4 w-4" />
+                No date selected
+              </div>
+            )}
+            {event.location && (
+              <div className="inline-flex items-center gap-1">
+                <MapPin className="h-4 w-4" />
+                {event.location}
+              </div>
+            )}
+          </div>
+          {event.description && (
+            <p className="max-w-2xl text-sm text-muted-foreground">
               {event.description}
             </p>
           )}
         </div>
-        <Button asChild variant="outline">
-          <Link href={"/dashboard"}>
-              Back
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button asChild className="p-4">
+            <Link href={`/events/${event.id}/edit`}>
+              <SquarePen className="h-4 w-4" />
+              Edit
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="p-4">
+            <Link href="#share">
+              <Share2 className="h-4 w-4"/>
+              Share
+            </Link>
+          </Button>
+        </div>
       </div>
-      <div className="flex flex-wrap gap-2 text-xs">
-        <Badge>Going: {event.goingCount}</Badge>
-        <Badge variant="secondary">Maybe: {event.maybeCount}</Badge>
-        <Badge variant="outline">Not Going: {event.notGoingCount}</Badge>
+      <div className="flex gap-3 overflow-x-auto pb-1 md:grid md:grid-cols-3">
+        <div className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground md:block md:rounded-3xl md:p-6 md:text-center md:text-sm">
+          <span>Going</span>
+          <span className="ml-2 text-sm font-semibold text-emerald-500 md:mt-3 md:block md:ml-0 md:text-3xl">{event.goingCount}</span>
+        </div>
+        <div className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground md:block md:rounded-3xl md:p-6 md:text-center md:text-sm">
+          <span>Maybe</span>
+          <span className="ml-2 text-sm font-semibold text-amber-500 md:mt-3 md:block md:ml-0 md:text-3xl">{event.maybeCount}</span>
+        </div>
+        <div className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-2 text-xs font-medium text-muted-foreground md:block md:rounded-3xl md:p-6 md:text-center md:text-sm">
+          <span>Not going</span>
+          <span className="ml-2 text-sm font-semibold text-destructive md:mt-3 md:block md:ml-0 md:text-3xl">{event.notGoingCount}</span>
+        </div>
       </div>
 
       <Card>
