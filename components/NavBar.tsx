@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { UserButton } from '@neondatabase/auth-ui';
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { authClient } from "@/lib/auth/client";
 
@@ -10,11 +11,31 @@ import { authClient } from "@/lib/auth/client";
 export default function NavBar() {
   const pathname = usePathname();
   const { data: session } = authClient.useSession();
-  const isAuthenticated = Boolean(session?.user?.id);
+  const [lastSession, setLastSession] = useState(session);
+
+  useEffect(() => {
+    if (session) {
+      setLastSession(session);
+      return;
+    }
+
+    if (
+      pathname === "/" ||
+      pathname === "/auth/sign-in" ||
+      pathname === "/auth/sign-up" ||
+      pathname === "/auth/forgot-password"
+    ) {
+      setLastSession(undefined);
+    }
+  }, [session, pathname]);
+
+  const currentSession = session ?? lastSession;
+  const isAuthenticated = Boolean(currentSession?.user?.id);
   const isAuthPage =
     pathname === "/auth/sign-in" ||
     pathname === "/auth/sign-up" ||
-    pathname === "/auth/forgot-password";
+    pathname === "/auth/forgot-password" ||
+    pathname === "/auth/sign-out";
 
   if (isAuthPage) {
     return (
@@ -39,7 +60,7 @@ export default function NavBar() {
           </Link>
 
           {isAuthenticated ? (
-            <div className="text-md text-[var(--muted-foreground)] flex items-center gap-2">
+            <div className="text-md text-muted-foreground flex items-center gap-2">
               <Link href={"/dashboard"}>Dashboard</Link>
               <UserButton size="icon" />
             </div>

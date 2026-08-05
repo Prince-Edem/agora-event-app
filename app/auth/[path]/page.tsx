@@ -16,12 +16,29 @@ export default async function AuthPage({
   const isSignIn = path === "sign-in";
   const isSignUp = path === "sign-up";
   const isForgotPassword = path === "forgot-password";
-  const redirectTo = path === "sign-out" ? "/" : undefined;
+  const isSigningOut = path === "sign-out";
+  const redirectTo = isSigningOut ? "/" : undefined;
+
+  if (isSigningOut) {
+    return (
+      <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden bg-background pt-16 px-4">
+        <div className="flex h-full w-full items-center justify-center">
+          <div
+            className="h-12 w-12 rounded-full border-4 border-slate-200 dark:border-slate-700"
+            style={{ animation: "spin 1s linear infinite", borderTopColor: "var(--gold)" }}
+          />
+        </div>
+        <div className="sr-only">
+          <AuthView path={path} redirectTo={redirectTo} />
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="flex flex-1 items-center justify-center py-16 md:pt-14.5">
       <div className="w-full max-w-md">
-        <div className="space-y-0.5">
+        <div className="space-y-0.5 max-w-sm">
           <h1
             className={`text-2xl font-semibold tracking-tight`}
           >
@@ -33,7 +50,7 @@ export default async function AuthPage({
               ? "Reset your password"
               : "Manage your account"}
           </h1>
-          <p className={`text-sm leading-6 ${isSignIn ? "text-slate-600" : "text-slate-500"}`}>
+          <p className={"text-sm leading-6 text-gray-500"}>
             {isSignIn
               ? "Sign in to manage events, invite guests, and track RSVP status."
               : isSignUp
