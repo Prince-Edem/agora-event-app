@@ -39,16 +39,18 @@ export default async function AuthPage({
     <main className="flex flex-1 items-center justify-center py-16 md:pt-14.5">
       <div className="w-full max-w-md">
         <div className="space-y-0.5 max-w-sm">
-          <h1
-            className={`text-2xl font-semibold tracking-tight`}
-          >
-            {isSignIn
-              ? "Welcome back to Gathr"
-              : isSignUp
-              ? "Create your account"
-              : isForgotPassword
-              ? "Reset your password"
-              : "Manage your account"}
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {isSignIn ? (
+              <>
+                Welcome back to <span className="text-[#4B3F8F]">AGORA</span>
+              </>
+            ) : isSignUp ? (
+              "Create your account"
+            ) : isForgotPassword ? (
+              "Reset your password"
+            ) : (
+              "Manage your account"
+            )}
           </h1>
           <p className={"text-sm leading-6 text-gray-500"}>
             {isSignIn

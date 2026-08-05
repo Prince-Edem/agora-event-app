@@ -43,7 +43,7 @@ export default function NavBar() {
       <header className="border-b border-gray-500 bg-brand backdrop-blur">
         <div className="mx-auto flex items-center justify-between h-16 w-full max-w-6xl px-4">
           <Link href={"/"} className="text-3xl font-bold tracking-tighter text-white">
-            GATHR<span className="text-gold">.</span>
+            AGORA<span className="text-gold">{" "}.</span>
           </Link>
           <div />
         </div>
@@ -56,7 +56,7 @@ export default function NavBar() {
       <header className="border-b border-gray-500 bg-brand backdrop-blur">
         <div className="mx-auto flex items-center justify-between h-16 w-full max-w-6xl px-4">
           <Link href={"/"} className="text-3xl font-bold tracking-tighter text-white">
-            GATHR<span className="text-gold">.</span>
+            AGORA<span className="text-gold">.</span>
           </Link>
 
           {isAuthenticated ? (
