@@ -25,7 +25,11 @@ export default function NavBar() {
     </nav>
   )}
 
-  if (pathname === "/auth/sign-in" || pathname === "/auth/sign-up" || "/auth/forgot-password") {
+  if (
+    pathname === "/auth/sign-in" ||
+    pathname === "/auth/sign-up" ||
+    pathname === "/auth/forgot-password"
+  ) {
     return (
     <nav className="fixed top-0 w-full z-50">
       <header className="border-b border-gray-500 bg-brand backdrop-blur">
