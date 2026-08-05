@@ -6,19 +6,25 @@ import Link from "next/link";
 
 const cards = [
   {
-    icon: <CalendarPlus />,
+    icon: CalendarPlus,
     title: "Create in minutes",
-    description: "Set the date, place, and details for any gathering, big or small."
+    description: "Set the date, place, and details for any gathering, big or small.",
+    bgClass: "bg-sky-600",
+    iconClass: "text-white",
   },
   {
-    icon: <Share2 />,
+    icon: Share2,
     title: "Share with a link",
     description: "Send one link to your guests, however you already message them.",
+    bgClass: "bg-emerald-600",
+    iconClass: "text-white",
   },
   {
-    icon: <UserStar />,
+    icon: UserStar,
     title: "Track RSVPs live",
     description: "See who's in, who's out, and who hasn't answered yet.",
+    bgClass: "bg-amber-500",
+    iconClass: "text-white",
   }
 ]
 
@@ -36,7 +42,7 @@ export default function Home() {
         </div>
         {/* Buttons */}
         <div className="flex items-center justify-center gap-4">
-          <Link href={"/auth/sign-in"}>
+          <Link href={"/events/new"}>
             <Button className="px-6 py-6 cursor-pointer">
               Create an event
               <span>
@@ -44,8 +50,8 @@ export default function Home() {
               </span>
             </Button>
           </Link>
-          <Link href={"/auth/sign-in"}>
-            <Button className="px-6 py-6 cursor-pointer border-1 border-[var(--brand)] bg-white" variant="ghost">
+          <Link href={"/dashboard"}>
+            <Button className="px-6 py-6 cursor-pointer bg-white" variant="ghost">
               Open dashboard
             </Button>
           </Link>
@@ -53,23 +59,26 @@ export default function Home() {
       </div>
       {/* Cards */}
       <div className="flex flex-col sm:flex-row mx-auto justify-center items-center gap-5">
-        { cards.map((card, key) => (
-            <Card key={key} className="flex-1 px-3 pb-14 shadow-md">
-            <CardHeader>
-              <span className="py-3">
-                {card.icon}
-              </span>
-              <CardTitle>
-                <h2 className="font-semibold">{card.title}</h2>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                {card.description}
-              </p>
-            </CardContent>
-          </Card> 
-        ))}
+        { cards.map((card, key) => {
+          const Icon = card.icon;
+          return (
+            <Card key={key} className="flex-1 px-3 pb-14 pt-8 shadow-md">
+              <CardHeader className="flex flex-col items-start gap-3">
+                <span className={`inline-flex h-10 w-10 items-center justify-center rounded-md ${card.bgClass}`}>
+                  <Icon className={`h-6 w-6 ${card.iconClass}`} />
+                </span>
+                <CardTitle>
+                  <h2 className="font-semibold">{card.title}</h2>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  {card.description}
+                </p>
+              </CardContent>
+            </Card>
+          )
+        })}
         {/* <Card className="px-3 py-7">
           <CardHeader>
             <CardTitle>Share with a link</CardTitle>

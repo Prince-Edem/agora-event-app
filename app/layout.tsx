@@ -34,7 +34,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
-        <NeonAuthUIProvider authClient={authClient} redirectTo="/dashboard">
+        <NeonAuthUIProvider authClient={authClient} redirectTo="/">
           <NavBar />
           <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-8">
             {children}
