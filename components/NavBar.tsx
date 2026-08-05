@@ -11,7 +11,7 @@ import { authClient } from "@/lib/auth/client";
 export default function NavBar() {
   const pathname = usePathname();
   const { data: session } = authClient.useSession();
-  const [lastSession, setLastSession] = useState(session);
+  const [lastSession, setLastSession] = useState<typeof session | undefined>(session);
 
   useEffect(() => {
     if (session) {
