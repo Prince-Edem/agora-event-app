@@ -72,7 +72,7 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
           <h1 className="text-2xl font-semibold tracking-tight">{event.title}</h1>
           <p>
             {event.eventDate 
-              ? new Date(event.eventDate).toLocaleString()
+              ? new Date(event.eventDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
               : "No date selected"}
 
               {event.location ? ` - ${event.location}` : "" }

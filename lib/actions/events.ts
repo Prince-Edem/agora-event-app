@@ -5,21 +5,30 @@ import { getSession } from "../auth/server";
 import { prisma} from "../prisma";
 import type { RsvpStatus } from "@/app/generated/prisma/enums";
 
+function capitalizeFirst(value: string) {
+  return value.replace(/^\s*([a-z])/, (_, first) => first.toUpperCase());
+}
+
 function parseCreateEvent(formData: FormData) {
-  const title = String(formData.get("title") ?? "").trim();
+  const title = capitalizeFirst(String(formData.get("title") ?? "").trim());
   if (title.length < 3 || title.length > 120) {
     throw new Error("Title must be between 3 and 120 characters.");
   }
 
-  const description = String(formData.get("description") ?? "").trim();
-  const location = String(formData.get("location") ?? "").trim();
+  const description = capitalizeFirst(String(formData.get("description") ?? "").trim());
+  const location = capitalizeFirst(String(formData.get("location") ?? "").trim());
   const eventDate = String(formData.get("eventDate") ?? "").trim();
+  const eventTime = String(formData.get("eventTime") ?? "").trim();
+
+  const dateTime = eventDate && eventTime
+    ? `${eventDate}T${eventTime}:00`
+    : eventDate;
 
   return {
     title, 
     description: description.length ? description.slice(0, 2000) : null,
     location: location.length ? location.slice(0, 200) : null,
-    eventDate: eventDate.length ? eventDate : null,
+    eventDate: dateTime.length ? dateTime : null,
   };
 }
 
@@ -69,9 +78,10 @@ export async function createEventAction(formData: FormData) {
       eventDate: new Date(input.eventDate),
     },
   });
-    redirect(`/events/${created.id}`);
+    return created;
   } catch (err) {
     console.error(err);
+    throw new Error("Failed to create event.");
   }
 
 }
