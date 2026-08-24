@@ -35,7 +35,7 @@ export function ShareEventButton({
 
   return (
     <>
-      <Button type="button" variant="outline" className="p-4" onClick={() => setIsOpen(true)}>
+      <Button type="button" variant="outline" className="px-4 py-5 cursor-pointer" onClick={() => setIsOpen(true)}>
         <Share2 className="h-4 w-4" />
         Share
       </Button>

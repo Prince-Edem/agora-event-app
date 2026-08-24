@@ -132,7 +132,7 @@ export async function InviteRsvpContent({token, submitted, submittedEmail}:
               <AttendanceSelector initialStatus={existingRsvp?.status} />
             </Field>   
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button type="submit" className="px-5 py-5">Submit RSVP</Button>
+              <Button type="submit" className="px-5 py-5 cursor-pointer">Submit RSVP</Button>
             </div>         
           </FieldGroup>
         </form>

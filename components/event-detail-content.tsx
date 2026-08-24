@@ -105,7 +105,7 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
           )}
         </div>
         <div className="flex items-center gap-2">
-          <Button asChild className="p-4">
+          <Button asChild className="px-4 py-5">
             <Link href={`/events/${event.id}/edit`}>
               <SquarePen className="h-4 w-4" />
               Edit

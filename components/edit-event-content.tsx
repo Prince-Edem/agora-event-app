@@ -100,7 +100,7 @@ export default function EditEventContent({
               </Field>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button type="submit" className="px-5 py-5" disabled={isSaving}>
+                <Button type="submit" className="px-5 py-5 cursor-pointer" disabled={isSaving}>
                   {isSaving ? "Saving..." : "Save changes"}
                 </Button>
                 <Button type="button" variant="outline" asChild className="px-5 py-5">
@@ -115,7 +115,7 @@ export default function EditEventContent({
             <p className="mt-1 max-w-xl text-sm leading-6 text-muted-foreground">
               This removes the event and its guest list permanently. Guests will no longer be able to view or RSVP.
             </p>
-            <Button type="button" variant="destructive" className="mt-4" onClick={() => setIsDeleteModalOpen(true)} disabled={isDeleting}>
+            <Button type="button" variant="destructive" className="mt-4 cursor-pointer px-5 py-5" onClick={() => setIsDeleteModalOpen(true)} disabled={isDeleting}>
               <Trash2 className="h-4 w-4" />
               {isDeleting ? "Deleting..." : "Delete event"}
             </Button>
@@ -143,10 +143,10 @@ export default function EditEventContent({
               This removes the event and its guest list permanently. Guests will no longer be able to view or RSVP. This can&apos;t be undone.
             </p>
             <div className="mt-6 flex justify-end gap-3">
-              <Button type="button" variant="outline" onClick={() => setIsDeleteModalOpen(false)} disabled={isDeleting}>
+              <Button type="button" variant="outline" className="cursor-pointer px-5 py-5" onClick={() => setIsDeleteModalOpen(false)} disabled={isDeleting}>
                 Cancel
               </Button>
-              <Button type="button" variant="destructive" onClick={confirmDelete} disabled={isDeleting}>
+              <Button type="button" variant="destructive" className="cursor-pointer px-5 py-5" onClick={confirmDelete} disabled={isDeleting}>
                 <Trash2 className="h-4 w-4" />
                 {isDeleting ? "Deleting..." : "Delete event"}
               </Button>
