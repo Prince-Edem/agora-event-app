@@ -9,7 +9,7 @@ function capitalizeFirst(value: string) {
   return value.replace(/^\s*([a-z])/, (_, first) => first.toUpperCase());
 }
 
-function parseCreateEvent(formData: FormData) {
+function parseEvent(formData: FormData) {
   const title = capitalizeFirst(String(formData.get("title") ?? "").trim());
   if (title.length < 3 || title.length > 120) {
     throw new Error("Title must be between 3 and 120 characters.");
@@ -63,7 +63,7 @@ export async function createEventAction(formData: FormData) {
   if (!userId) {
     throw new Error("Not authenticated.");
   }
-  const input = parseCreateEvent(formData);
+  const input = parseEvent(formData);
   if (!input.eventDate) {
     throw new Error("Event date is required.");
   }
@@ -158,4 +158,54 @@ export async function submitOrUpdateRsvpAction(token: string, formData: FormData
   })
   
   redirect(`/invite/${token}?submitted=1`);
+}
+
+export async function updateEventAction(eventId: string, formData: FormData) {
+  const session = await getSession();
+  const userId = session?.data?.user.id;
+  if (!userId) {
+    throw new Error("Not authenticated.");
+  }
+
+  const input = parseEvent(formData);
+  if (!input.eventDate) {
+    throw new Error("Event date is required.");
+  }
+
+  const ownedEvent = await prisma.event.findFirst({
+    where: { id: eventId, ownerUserId: userId },
+    select: { id: true },
+  });
+  if (!ownedEvent) {
+    throw new Error("Event not found.");
+  }
+
+  await prisma.event.update({
+    where: { id: eventId },
+    data: {
+      title: input.title,
+      description: input.description,
+      location: input.location,
+      eventDate: new Date(input.eventDate),
+    },
+  });
+
+  redirect(`/events/${eventId}`);
+}
+
+export async function deleteEventAction(eventId: string) {
+  const session = await getSession();
+  const userId = session?.data?.user.id;
+  if (!userId) {
+    throw new Error("Not authenticated.");
+  }
+
+  const deleted = await prisma.event.deleteMany({
+    where: { id: eventId, ownerUserId: userId },
+  });
+  if (deleted.count === 0) {
+    throw new Error("Event not found.");
+  }
+
+  redirect("/dashboard");
 }

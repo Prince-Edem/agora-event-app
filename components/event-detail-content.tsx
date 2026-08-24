@@ -84,7 +84,7 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-border bg-surface"><ArrowLeft className="h-4 w-4" /></span>
-              Back to events
+              Back
             </Link>
           </div>
           <h1 className="text-3xl font-semibold tracking-tight mt-8">{event.title}</h1>

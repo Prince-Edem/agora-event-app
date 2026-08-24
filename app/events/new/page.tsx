@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { createEventAction } from "@/lib/actions/events";
+import { ArrowLeft } from "lucide-react";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -62,7 +63,15 @@ export default function NewEventPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-2xl py-16 md:py-18">
+    <div className="w-full py-16 md:py-16">
+      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+        <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-border bg-surface"><ArrowLeft className="h-4 w-4" /></span>
+          Back
+        </Link>
+      </div>
+
+      <div className="mx-auto mt-8 w-full max-w-2xl">
       <Card className="pb-14 pt-8 shadow-md">
         <CardHeader>
           <CardTitle className="font-semibold text-2xl">Create an event</CardTitle>
@@ -75,7 +84,7 @@ export default function NewEventPage() {
                 <Input id="title" name="title" placeholder="Adjei-Mensah wedding" required />
               </Field>
 
-              <div className="grid gap-4 grid-cols-2">
+              <div className="md:grid gap-4 grid-cols-2">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
                   <Input
@@ -131,6 +140,7 @@ export default function NewEventPage() {
           </form>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
