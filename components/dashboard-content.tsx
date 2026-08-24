@@ -87,13 +87,13 @@ export async function DashboardContent({userId}: {userId: string}) {
                   </p>
                 </div>
                 <div className='flex shrink-0 items-center justify-between gap-3 font-semibold'>
-                <div>
-                  <span className='text-emerald-600'>{event.goingCount}</span> going
-                </div>
-                <Button className='text-xs'>
+                  <div>
+                    <span className='text-emerald-600'>{event.goingCount}</span> going
+                  </div>
+                {/* <Button className='text-xs'>
                   <Share2 className='w-2 h-2'/>
                   Share
-                </Button>
+                </Button> */}
                 </div>
               </div>
               {/* <div className="flex flex-wrap gap-2 text-xs">

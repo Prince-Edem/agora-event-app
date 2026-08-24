@@ -109,6 +109,7 @@ export async function createInviteLinkAction(eventId: string) {
     update: { token },
   });
 
+  return token;
 }
 
 

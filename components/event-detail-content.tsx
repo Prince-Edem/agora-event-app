@@ -3,11 +3,9 @@ import { notFound } from "next/navigation";
 import { countByStatus } from "./dashboard-content";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { createInviteLinkAction } from "@/lib/actions/events";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import { ArrowLeft, CalendarDays, MapPin, Share2, SquarePen } from 'lucide-react';
+import { ShareEventButton } from "./share-event-modal";
+import { AttendeeList } from "./attendee-list";
+import { ArrowLeft, CalendarDays, MapPin, SquarePen } from 'lucide-react';
 
 
 export async function EventDetailContent({userId, eventId}: {userId: string, eventId: string}) {
@@ -65,13 +63,6 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
     respondedAt: r.respondedAt.toISOString(),
   }))
 
-  const createInviteActionForEvent = createInviteLinkAction.bind(null, event.id);
-
-  function labelStatus(status: string) {
-    if (status === "not_going") return "Not going";
-    return "Going";
-  }
-
   const eventDateLabel = event.eventDate
     ? `${event.eventDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })} · ${event.eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
     : null;
@@ -120,12 +111,7 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
               Edit
             </Link>
           </Button>
-          <Button asChild variant="outline" className="p-4">
-            <Link href="#share">
-              <Share2 className="h-4 w-4"/>
-              Share
-            </Link>
-          </Button>
+          <ShareEventButton eventId={event.id} eventTitle={event.title} initialInviteUrl={inviteUrl} />
         </div>
       </div>
       <div className="flex gap-3 overflow-x-auto pb-1 md:grid md:grid-cols-3">
@@ -143,7 +129,7 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
         </div>
       </div>
 
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Invite Link</CardTitle>
         </CardHeader>
@@ -167,44 +153,8 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
             </Button>
           </form>
         </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Attendees</CardTitle>
-          <CardContent>
-            {rsvps.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
-                No responses yet.
-              </p>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Updated</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {rsvps.map((rsvp) => (
-                    <TableRow>
-                      <TableCell>{rsvp.name}</TableCell>
-                      <TableCell>{rsvp.email}</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">
-                          {rsvp.status === "not_going" ? "not going" : rsvp.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{new Date(rsvp.respondedAt).toLocaleDateString()}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </CardHeader>
-      </Card>
+      </Card> */}
+      <AttendeeList rsvps={rsvps} />
     </div>
   );
 }
