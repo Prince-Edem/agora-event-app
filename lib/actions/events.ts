@@ -158,7 +158,7 @@ export async function submitOrUpdateRsvpAction(token: string, formData: FormData
     },
   })
   
-  redirect(`/invite/${token}?submitted=1`);
+  redirect(`/invite/${token}?submitted=1&email=${encodeURIComponent(emailNormalized)}`);
 }
 
 export async function updateEventAction(eventId: string, formData: FormData) {

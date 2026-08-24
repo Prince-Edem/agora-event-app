@@ -9,8 +9,8 @@ const options = [
   { value: "not_going", label: "Can't go", icon: X },
 ] as const;
 
-export function AttendanceSelector() {
-  const [selected, setSelected] = useState<(typeof options)[number]["value"]>("going");
+export function AttendanceSelector({ initialStatus = "going" }: { initialStatus?: (typeof options)[number]["value"] }) {
+  const [selected, setSelected] = useState<(typeof options)[number]["value"]>(initialStatus);
 
   return (
     <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Will you attend?">
