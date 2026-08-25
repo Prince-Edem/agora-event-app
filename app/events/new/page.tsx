@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { DateTimePicker } from "@/components/date-time-picker";
 import Link from "next/link";
 import { createEventAction } from "@/lib/actions/events";
 import { ArrowLeft } from "lucide-react";
@@ -30,6 +31,18 @@ export default function NewEventPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
+
+  const today = useMemo(() => {
+    const date = new Date();
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  }, []);
+
+  const now = useMemo(() => {
+    const date = new Date();
+    return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+  }, []);
+
+  const minTime = eventDate === today ? now : undefined;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,37 +83,29 @@ export default function NewEventPage() {
               <div className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
-                  <Input
+                  <DateTimePicker
                     id="eventDate"
                     name="eventDate"
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="YYYY-MM-DD"
-                    aria-label="Date (YYYY-MM-DD)"
-                    autoComplete="off"
-                    maxLength={10}
-                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-                    required
+                    type="date"
+                    placeholder="DD/MM/YYYY"
+                    aria-label="date (day, month, year)"
+                    min={today}
                     value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
+                    onChange={setEventDate}
                   />
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="eventTime">Time</FieldLabel>
-                  <Input
+                  <DateTimePicker
                     id="eventTime"
                     name="eventTime"
-                    type="text"
-                    inputMode="numeric"
+                    type="time"
                     placeholder="HH:MM"
-                    aria-label="Time (HH:MM)"
-                    autoComplete="off"
-                    maxLength={5}
-                    pattern="[0-9]{2}:[0-9]{2}"
-                    required
+                    aria-label="time"
+                    min={minTime}
                     value={eventTime}
-                    onChange={(e) => setEventTime(e.target.value)}
+                    onChange={setEventTime}
                   />
                 </Field>
               </div>

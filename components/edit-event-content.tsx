@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, ArrowLeft, Trash2 } from "lucide-react";
 import { updateEventAction, deleteEventAction } from "@/lib/actions/events";
@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { DateTimePicker } from "@/components/date-time-picker";
 
 type EventValues = {
   title: string;
@@ -29,6 +30,16 @@ export default function EditEventContent({
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const today = useMemo(() => {
+    const date = new Date();
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  }, []);
+
+  const now = useMemo(() => {
+    const date = new Date();
+    return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+  }, []);
 
   const updateValue = (field: keyof EventValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -71,11 +82,11 @@ export default function EditEventContent({
               <div className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
-                  <Input id="eventDate" name="eventDate" type="text" inputMode="numeric" placeholder="YYYY-MM-DD" value={values.eventDate} onChange={(e) => updateValue("eventDate", e.target.value)} required aria-label="Date (YYYY-MM-DD)" autoComplete="off" maxLength={10} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+                  <DateTimePicker id="eventDate" name="eventDate" type="date" placeholder="DD/MM/YYYY" value={values.eventDate} min={today} onChange={(value) => updateValue("eventDate", value)} aria-label="date (day, month, year)" />
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="eventTime">Time</FieldLabel>
-                  <Input id="eventTime" name="eventTime" type="text" inputMode="numeric" placeholder="HH:MM" value={values.eventTime} onChange={(e) => updateValue("eventTime", e.target.value)} required aria-label="Time (HH:MM)" autoComplete="off" maxLength={5} pattern="[0-9]{2}:[0-9]{2}" />
+                  <DateTimePicker id="eventTime" name="eventTime" type="time" placeholder="HH:MM" value={values.eventTime} min={values.eventDate === today ? now : undefined} onChange={(value) => updateValue("eventTime", value)} aria-label="time" />
                 </Field>
               </div>
 

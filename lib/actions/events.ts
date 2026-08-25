@@ -24,6 +24,15 @@ function parseEvent(formData: FormData) {
     ? `${eventDate}T${eventTime}:00`
     : eventDate;
 
+  if (!eventDate || !eventTime || !/^\d{4}-\d{2}-\d{2}$/.test(eventDate) || !/^\d{2}:\d{2}$/.test(eventTime)) {
+    throw new Error("A valid date and time are required.");
+  }
+
+  const parsedDateTime = new Date(dateTime);
+  if (Number.isNaN(parsedDateTime.getTime()) || parsedDateTime < new Date()) {
+    throw new Error("Event date and time cannot be in the past.");
+  }
+
   return {
     title, 
     description: description.length ? description.slice(0, 2000) : null,
