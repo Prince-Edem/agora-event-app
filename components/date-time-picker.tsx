@@ -70,7 +70,7 @@ export function DateTimePicker({
         required
         aria-label={ariaLabel}
         onChange={(event) => onChange(event.target.value)}
-        className="pointer-events-none absolute h-px w-px opacity-0"
+        className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
         tabIndex={-1}
       />
     </div>
