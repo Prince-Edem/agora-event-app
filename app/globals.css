@@ -80,23 +80,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-input[type="date"],
-input[type="time"] {
-  color-scheme: light;
-  color: var(--muted-foreground);
-}
-
-input.date-time-input-empty::-webkit-datetime-edit {
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-  opacity: 0.5;
-  cursor: pointer;
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;

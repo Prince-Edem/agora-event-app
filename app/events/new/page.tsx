@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,23 +30,6 @@ export default function NewEventPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
-
-  const today = useMemo(() => {
-    const d = new Date();
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }, []);
-
-  const now = useMemo(() => {
-    const d = new Date();
-    const hours = String(d.getHours()).padStart(2, "0");
-    const minutes = String(d.getMinutes()).padStart(2, "0");
-    return `${hours}:${minutes}`;
-  }, []);
-
-  const minTime = eventDate === today ? now : "";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,46 +70,38 @@ export default function NewEventPage() {
               <div className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
-                  <div className="relative w-full min-w-0">
-                    <Input
-                      id="eventDate"
-                      name="eventDate"
-                      type="date"
-                      aria-label="Date (dd/mm/yyyy)"
-                      required
-                      min={today}
-                      value={eventDate}
-                      className={`block w-full min-w-0 max-w-full box-border ${!eventDate ? "date-time-input-empty" : ""}`}
-                      onChange={(e) => setEventDate(e.target.value)}
-                    />
-                    {!eventDate && (
-                      <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">
-                        dd/mm/yyyy
-                      </span>
-                    )}
-                  </div>
+                  <Input
+                    id="eventDate"
+                    name="eventDate"
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="YYYY-MM-DD"
+                    aria-label="Date (YYYY-MM-DD)"
+                    autoComplete="off"
+                    maxLength={10}
+                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                    required
+                    value={eventDate}
+                    onChange={(e) => setEventDate(e.target.value)}
+                  />
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="eventTime">Time</FieldLabel>
-                  <div className="relative w-full min-w-0">
-                    <Input
-                      id="eventTime"
-                      name="eventTime"
-                      type="time"
-                      aria-label="Time"
-                      required
-                      min={minTime}
-                      value={eventTime}
-                      className={`block w-full min-w-0 max-w-full box-border ${!eventTime ? "date-time-input-empty" : ""}`}
-                      onChange={(e) => setEventTime(e.target.value)}
-                    />
-                    {!eventTime && (
-                      <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">
-                        --:-- --
-                      </span>
-                    )}
-                  </div>
+                  <Input
+                    id="eventTime"
+                    name="eventTime"
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="HH:MM"
+                    aria-label="Time (HH:MM)"
+                    autoComplete="off"
+                    maxLength={5}
+                    pattern="[0-9]{2}:[0-9]{2}"
+                    required
+                    value={eventTime}
+                    onChange={(e) => setEventTime(e.target.value)}
+                  />
                 </Field>
               </div>
 

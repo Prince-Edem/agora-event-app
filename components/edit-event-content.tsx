@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, ArrowLeft, Trash2 } from "lucide-react";
 import { updateEventAction, deleteEventAction } from "@/lib/actions/events";
@@ -29,16 +29,6 @@ export default function EditEventContent({
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  const today = useMemo(() => {
-    const date = new Date();
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-  }, []);
-
-  const now = useMemo(() => {
-    const date = new Date();
-    return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-  }, []);
 
   const updateValue = (field: keyof EventValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -81,17 +71,11 @@ export default function EditEventContent({
               <div className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
-                  <div className="relative w-full min-w-0">
-                    <Input id="eventDate" name="eventDate" type="date" value={values.eventDate} min={values.eventDate < today ? undefined : today} onChange={(e) => updateValue("eventDate", e.target.value)} required aria-label="Date (dd/mm/yyyy)" className={`block w-full min-w-0 max-w-full box-border ${!values.eventDate ? "date-time-input-empty" : ""}`} />
-                    {!values.eventDate && <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">dd/mm/yyyy</span>}
-                  </div>
+                  <Input id="eventDate" name="eventDate" type="text" inputMode="numeric" placeholder="YYYY-MM-DD" value={values.eventDate} onChange={(e) => updateValue("eventDate", e.target.value)} required aria-label="Date (YYYY-MM-DD)" autoComplete="off" maxLength={10} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="eventTime">Time</FieldLabel>
-                  <div className="relative w-full min-w-0">
-                    <Input id="eventTime" name="eventTime" type="time" value={values.eventTime} min={values.eventDate === today ? now : undefined} onChange={(e) => updateValue("eventTime", e.target.value)} required aria-label="Time" className={`block w-full min-w-0 max-w-full box-border ${!values.eventTime ? "date-time-input-empty" : ""}`} />
-                    {!values.eventTime && <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">--:-- --</span>}
-                  </div>
+                  <Input id="eventTime" name="eventTime" type="text" inputMode="numeric" placeholder="HH:MM" value={values.eventTime} onChange={(e) => updateValue("eventTime", e.target.value)} required aria-label="Time (HH:MM)" autoComplete="off" maxLength={5} pattern="[0-9]{2}:[0-9]{2}" />
                 </Field>
               </div>
 
