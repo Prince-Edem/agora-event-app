@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import { ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Rsvp = {
@@ -19,17 +19,20 @@ export function AttendeeList({ rsvps }: { rsvps: Rsvp[] }) {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-4">
         <CardTitle>Guests</CardTitle>
-        <select
-          aria-label="Filter attendees"
-          value={filter}
-          onChange={(event) => setFilter(event.target.value as "all" | Rsvp["status"])}
-          className="h-9 rounded-lg border border-border bg-background px-3 text-sm font-medium text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-        >
-          <option value="all">All guests</option>
-          <option value="going">Going</option>
-          <option value="maybe">Maybe</option>
-          <option value="not_going">Not going</option>
-        </select>
+        <div className="relative">
+          <select
+            aria-label="Filter attendees"
+            value={filter}
+            onChange={(event) => setFilter(event.target.value as "all" | Rsvp["status"])}
+            className="h-9 appearance-none rounded-lg border border-border bg-background px-3 pr-9 text-sm font-medium text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            <option value="all">All guests</option>
+            <option value="going">Going</option>
+            <option value="maybe">Maybe</option>
+            <option value="not_going">Not going</option>
+          </select>
+          <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        </div>
       </CardHeader>
       <CardContent className="pt-0">
         {filteredRsvps.length === 0 ? (

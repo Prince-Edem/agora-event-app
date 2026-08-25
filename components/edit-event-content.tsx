@@ -78,14 +78,20 @@ export default function EditEventContent({
                 <Input id="title" name="title" value={values.title} onChange={(e) => updateValue("title", e.target.value)} required />
               </Field>
 
-              <div className="md:grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
-                  <Input id="eventDate" name="eventDate" type="date" value={values.eventDate} min={values.eventDate < today ? undefined : today} onChange={(e) => updateValue("eventDate", e.target.value)} required />
+                  <div className="relative w-full min-w-0">
+                    <Input id="eventDate" name="eventDate" type="date" value={values.eventDate} min={values.eventDate < today ? undefined : today} onChange={(e) => updateValue("eventDate", e.target.value)} required aria-label="Date (dd/mm/yyyy)" className={`block w-full min-w-0 max-w-full box-border ${!values.eventDate ? "date-time-input-empty" : ""}`} />
+                    {!values.eventDate && <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">dd/mm/yyyy</span>}
+                  </div>
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="eventTime">Time</FieldLabel>
-                  <Input id="eventTime" name="eventTime" type="time" value={values.eventTime} min={values.eventDate === today ? now : undefined} onChange={(e) => updateValue("eventTime", e.target.value)} required />
+                  <div className="relative w-full min-w-0">
+                    <Input id="eventTime" name="eventTime" type="time" value={values.eventTime} min={values.eventDate === today ? now : undefined} onChange={(e) => updateValue("eventTime", e.target.value)} required aria-label="Time" className={`block w-full min-w-0 max-w-full box-border ${!values.eventTime ? "date-time-input-empty" : ""}`} />
+                    {!values.eventTime && <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">--:-- --</span>}
+                  </div>
                 </Field>
               </div>
 

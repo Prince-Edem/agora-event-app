@@ -84,33 +84,49 @@ export default function NewEventPage() {
                 <Input id="title" name="title" placeholder="Adjei-Mensah wedding" required />
               </Field>
 
-              <div className="md:grid gap-4 grid-cols-2">
+              <div className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4">
                 <Field>
                   <FieldLabel htmlFor="eventDate">Date</FieldLabel>
-                  <Input
-                    id="eventDate"
-                    name="eventDate"
-                    type="date"
-                    placeholder="dd/mm/yyyy"
-                    required
-                    min={today}
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                  />
+                  <div className="relative w-full min-w-0">
+                    <Input
+                      id="eventDate"
+                      name="eventDate"
+                      type="date"
+                      aria-label="Date (dd/mm/yyyy)"
+                      required
+                      min={today}
+                      value={eventDate}
+                      className={`block w-full min-w-0 max-w-full box-border ${!eventDate ? "date-time-input-empty" : ""}`}
+                      onChange={(e) => setEventDate(e.target.value)}
+                    />
+                    {!eventDate && (
+                      <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">
+                        dd/mm/yyyy
+                      </span>
+                    )}
+                  </div>
                 </Field>
 
                 <Field>
                   <FieldLabel htmlFor="eventTime">Time</FieldLabel>
-                  <Input
-                    id="eventTime"
-                    name="eventTime"
-                    type="time"
-                    placeholder="--:-- --"
-                    required
-                    min={minTime}
-                    value={eventTime}
-                    onChange={(e) => setEventTime(e.target.value)}
-                  />
+                  <div className="relative w-full min-w-0">
+                    <Input
+                      id="eventTime"
+                      name="eventTime"
+                      type="time"
+                      aria-label="Time"
+                      required
+                      min={minTime}
+                      value={eventTime}
+                      className={`block w-full min-w-0 max-w-full box-border ${!eventTime ? "date-time-input-empty" : ""}`}
+                      onChange={(e) => setEventTime(e.target.value)}
+                    />
+                    {!eventTime && (
+                      <span className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-base text-muted-foreground md:text-sm">
+                        --:-- --
+                      </span>
+                    )}
+                  </div>
                 </Field>
               </div>
 

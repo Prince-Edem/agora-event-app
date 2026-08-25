@@ -128,32 +128,6 @@ export async function EventDetailContent({userId, eventId}: {userId: string, eve
           <span className="ml-2 text-sm font-semibold text-destructive md:mt-3 md:block md:ml-0 md:text-3xl">{event.notGoingCount}</span>
         </div>
       </div>
-
-      {/* <Card>
-        <CardHeader>
-          <CardTitle>Invite Link</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <p className="text-sm text-muted-foreground">
-            Share this link with guests to allow them to RSVP to your event without needing to create an account.
-          </p>
-          {inviteUrl ? (
-            <div className="rounded-md border border-border bg-surface p-3 text-sm">
-              {inviteUrl}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              No inivte link generated yet.
-            </p>
-          )
-        }
-          <form action={createInviteActionForEvent}>
-            <Button type="submit">
-              Generate Link
-            </Button>
-          </form>
-        </CardContent>
-      </Card> */}
       <AttendeeList rsvps={rsvps} />
     </div>
   );

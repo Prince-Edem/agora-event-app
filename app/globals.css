@@ -86,6 +86,11 @@ input[type="time"] {
   color: var(--muted-foreground);
 }
 
+input.date-time-input-empty::-webkit-datetime-edit {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
   opacity: 0.5;
