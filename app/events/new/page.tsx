@@ -121,7 +121,7 @@ export default function NewEventPage() {
                   id="description"
                   name="description"
                   placeholder="Tell your guests what to expect"
-                  rows={5}
+                  rows={8}
                   required
                 />
               </Field>
