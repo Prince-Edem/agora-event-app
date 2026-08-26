@@ -63,12 +63,12 @@ export default function NavBar() {
 
           {isAuthenticated ? (
             <div className="flex items-center gap-5">
-              <Link href={"/dashboard"}>          
+              {/* <Link href={"/dashboard"}>          
                 <Button className="text-md px-5 py-5 border-0 bg-white text-black hover:bg-white/95 cursor-pointer"> 
                   <LayoutDashboard />
                   Dashboard
                 </Button>
-              </Link>
+              </Link> */}
               <UserButton size="icon" className="cursor-pointer bg-white" />
             </div>
           ) : (

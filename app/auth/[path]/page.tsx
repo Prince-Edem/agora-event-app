@@ -17,7 +17,7 @@ export default async function AuthPage({
   const isSignUp = path === "sign-up";
   const isForgotPassword = path === "forgot-password";
   const isSigningOut = path === "sign-out";
-  const redirectTo = isSigningOut ? "/" : undefined;
+  const redirectTo = isSigningOut ? "/" : (isSignIn || isSignUp) ? "/dashboard" : undefined;
 
   if (isSigningOut) {
     return (

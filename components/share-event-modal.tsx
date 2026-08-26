@@ -58,35 +58,17 @@ export function ShareEventButton({
               </Button>
             </div>
 
-            {/* <div className="mt-5 overflow-hidden rounded-2xl border border-border">
-              <div className="flex items-center gap-4 border-b border-border p-4">
-                <LockKeyhole className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="font-medium">Keep private</p>
-                  <p className="text-sm text-muted-foreground">Only invited guests can access this event</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 bg-muted/30 p-4">
-                <Globe className="h-5 w-5 text-muted-foreground" />
-                <div className="flex-1">
-                  <p className="font-medium">Create public link</p>
-                  <p className="text-sm text-muted-foreground">Anyone with the link can view and RSVP</p>
-                </div>
-                {inviteUrl && <Check className="h-5 w-5 text-primary" />}
-              </div>
-            </div> */}
-
             {inviteUrl ? (
               <div className="mt-6 flex items-center gap-2 rounded-xl border border-border bg-background p-2 pl-4">
                 <span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">{inviteUrl}</span>
-                <Button type="button" onClick={copyLink}>
+                <Button type="button" className="px-4 py-5 cursor-pointer" onClick={copyLink}>
                   {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   {copied ? "Copied" : "Copy link"}
                 </Button>
               </div>
             ) : (
               <div className="mt-6 flex justify-end">
-                <Button type="button" onClick={createInvite} disabled={isPending}>
+                <Button type="button" className="px-4 py-5 cursor-pointer" onClick={createInvite} disabled={isPending}>
                   {isPending ? "Creating link..." : "Create share link"}
                 </Button>
               </div>

@@ -51,7 +51,7 @@ export async function DashboardContent({userId}: {userId: string}) {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Your Events</h1>
         <p className="text-sm text-muted-foreground">
-          Track attendee responses and manage invite links
+          Track guests responses and manage invite links
         </p>
       </div>
       <div className="justify-self-start md:justify-self-end">
